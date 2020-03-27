@@ -1,0 +1,66 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Lab 2</title>
+    <meta name="Lab2" content="Lab2">
+    <meta name="Mike Pastula" content="lab">
+</head>
+<body  style="background-color:grey;">
+
+<table width="720" align="center">
+    <tr  align="center">
+        <th colspan="2">Лабораторна робота №2</th>
+    </tr>
+    <tr  align="center">
+        <th colspan="2">Виконав студент 502 групи Пастула Михайло</th>
+    </tr>
+    <tr  align="center">
+        <th colspan="2">Варіант №13</th>
+    </tr>
+</table>
+<br><br><br><br><br><br><br><br><br>
+<table width="400" align="center">
+    <form action = "http://localhost:8080/book" method="post">
+        <tr>
+            <td width="50%" align="center">
+                <table>
+                    <tr>
+                        <td>
+                            <input type="radio" id="author_name" name="search" value="name" checked>
+                        </td>
+                        <td>
+                            <label for="author_name">Search by author name</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="radio" id="price" name="search" value="price">
+                        </td>
+                        <td>
+                            <label for="price">Get book with highest price</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="radio" id="time" name="search" value="time">
+                        </td>
+                        <td>
+                            <label for="time">Search oldest and newest book</label>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td valign="middle" align="center">
+                Name: <input type="text" name="authorName" id="authorName"/> <br/>
+            </td>
+        </tr>
+        <tr>
+            <td align="center" colspan="2"><input type="submit" value="Submit"></td>
+        </tr>
+    </form>
+
+</table>
+</body>
+</html>
