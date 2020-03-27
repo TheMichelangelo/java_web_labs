@@ -49,9 +49,11 @@ public class BooksServlet extends HttpServlet  {
                 rs = con.createStatement().executeQuery("Select id,book_name,author,print_date,price " +
                         "from book where author like '"+authorName+"'");
             }
-            else if("price".equals(radioButtonValue))
+            else if("name_length".equals(radioButtonValue))
             {
-                rs=con.createStatement().executeQuery("Select id,book_name,author,print_date,max(price) as price from book");
+                rs=con.createStatement().executeQuery("Select id,book_name,author,print_date,price,max(LENGTH(book_name)) as price from book");
+                // for mysql it's length, len otherwise
+                //rs=con.createStatement().executeQuery("Select id,book_name,author,print_date,price,max(len(book_name)) as price from book");
             }
             else if("time".equals(radioButtonValue))
             {
