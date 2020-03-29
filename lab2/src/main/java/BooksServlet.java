@@ -35,12 +35,8 @@ public class BooksServlet extends HttpServlet  {
         try{
             response.setContentType("text/html;charset=UTF-8");
             ArrayList<Book> books = new ArrayList<Book>();
-            Class.forName("com.mysql.jdbc.Driver");
-            String connectionURL = "jdbc:mysql://localhost:3306/world";
-            Connection con = DriverManager.getConnection(connectionURL, "root",
-                    "wrwolf");
-            //Class.forName("org.apache.derby.jdbc.ClientDriver").newInstance();
-            //Connection con=DriverManager.getConnection("'jdbc:derby://localhost:1527/myDB;create=true;user=me;password=mine");
+            Class.forName("org.apache.derby.jdbc.ClientDriver").newInstance();
+            Connection con=DriverManager.getConnection("'jdbc:derby://localhost:1527/myDB;create=true;user=me;password=mine");
             String radioButtonValue = request.getParameter("search");
             ResultSet rs = null;
             if("name".equals(radioButtonValue))
@@ -51,9 +47,7 @@ public class BooksServlet extends HttpServlet  {
             }
             else if("name_length".equals(radioButtonValue))
             {
-                rs=con.createStatement().executeQuery("Select id,book_name,author,print_date,price,max(LENGTH(book_name)) as price from book");
-                // for mysql it's length, len otherwise
-                //rs=con.createStatement().executeQuery("Select id,book_name,author,print_date,price,max(len(book_name)) as price from book");
+                rs=con.createStatement().executeQuery("Select id,book_name,author,print_date,price,max(len(book_name)) as price from book");
             }
             else if("time".equals(radioButtonValue))
             {
@@ -101,9 +95,7 @@ public class BooksServlet extends HttpServlet  {
 
     void printPageHeader(PrintWriter out)
     {
-        out.println("<!doctype html>\n" +
-                "\n" +
-                "<html lang=\"en\">\n" +
+        out.println("<!doctype html>\n"+
                 "<head>\n" +
                 "    <meta charset=\"utf-8\">\n" +
                 "    <title>Lab 2</title>\n" +
@@ -111,22 +103,10 @@ public class BooksServlet extends HttpServlet  {
                 "    <meta name=\"Mike Pastula\" content=\"lab\">\n" +
                 "</head>\n" +
                 "<body  style=\"background-color:grey;\">\n" +
-                "\n" +
                 "<table width=\"720\" align=\"center\">\n" +
-                "    <tr  align=\"center\">\n" +
-                "        <th colspan=\"2\">Лабораторна робота №2</th>\n" +
-                "    </tr>\n" +
-                "    <tr  align=\"center\">\n" +
-                "        <th colspan=\"2\">Виконав студент 502 групи Пастула Михайло</th>\n" +
-                "    </tr>\n" +
-                "    <tr  align=\"center\">\n" +
-                "        <th colspan=\"2\">Варіант №13</th>\n" +
-                "    </tr>\n" +
-                "    <tr  align=\"center\">\n" +
-                "        <th colspan=\"2\">" +
-                "           <a href=\"http://localhost:8080\">Back to the main page</a>"+
-                "        </th>\n" +
-                "    </tr>\n" +
+                "    <tr  align=\"center\"><th colspan=\"2\">Лабораторна робота №2</th></tr>\n"+
+                "    <tr  align=\"center\"><th colspan=\"2\">Варіант №13</th></tr>\n" +
+                "    <tr  align=\"center\"><th colspan=\"2\"><a href=\"http://localhost:8080\">Back to the main page</a></th></tr>\n"+
                 "</table>");
     }
 }
