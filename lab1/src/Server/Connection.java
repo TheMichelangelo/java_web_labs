@@ -4,7 +4,7 @@ import java.io.*;
 import java.net.Socket;
 import java.util.List;
 
-public class Connection extends Thread{
+public class Connection extends Thread {
 
     private final Socket clientSocket;
     private final Server server;
@@ -33,20 +33,18 @@ public class Connection extends Thread{
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
         String line;
-        while ( (line = reader.readLine()) != null)
-        {
+        while ((line = reader.readLine()) != null) {
             String[] tokens = line.split(" ");
-            if (tokens != null && tokens.length > 0)
-            {
+            if (tokens != null && tokens.length > 0) {
                 String cmd = tokens[0];
                 if ("logoff".equals(cmd) || "quit".equalsIgnoreCase(cmd)) {
                     handleLogoff();
                     break;
                 } else if ("login".equalsIgnoreCase(cmd)) {
                     handleLogin(outputStream, tokens);
-                } else if("msg".equals(cmd)) {
+                } else if ("msg".equals(cmd)) {
                     handleMessage(tokens);
-                }else {
+                } else {
                     String msg = "unknown " + cmd + "\n";
                     outputStream.write(msg.getBytes());
                 }
@@ -57,15 +55,15 @@ public class Connection extends Thread{
     }
 
     private void handleMessage(String[] tokens) throws IOException {
-        if(tokens.length<2)
+        if (tokens.length < 2)
             return;
         String message = login + ": ";
-        for(int i=1;i<tokens.length;i++)
+        for (int i = 1; i < tokens.length; i++)
             message += tokens[i];
-        if(!message.endsWith("\n"))
+        if (!message.endsWith("\n"))
             message += "\n";
         List<Connection> workerList = server.getWorkerList();
-        for(Connection worker : workerList) {
+        for (Connection worker : workerList) {
             if (!login.equals(worker.getLogin())) {
                 worker.send(message);
             }
@@ -74,8 +72,8 @@ public class Connection extends Thread{
 
     private void handleLogoff() throws IOException {
         List<Connection> workerList = server.getWorkerList();
-        String onlineMsg = login+ " left chat\n";
-        for(Connection worker : workerList) {
+        String onlineMsg = login + " left chat\n";
+        for (Connection worker : workerList) {
             if (!login.equals(worker.getLogin())) {
                 worker.send(onlineMsg);
             }
@@ -95,15 +93,13 @@ public class Connection extends Thread{
 
             List<Connection> workerList = server.getWorkerList();
 
-            String onlineMsg =login + " join chat"+ "\n";
-            for(Connection worker : workerList) {
+            String onlineMsg = login + " join chat" + "\n";
+            for (Connection worker : workerList) {
                 if (!login.equals(worker.getLogin())) {
                     worker.send(onlineMsg);
                 }
             }
-        }
-        else
-        {
+        } else {
             String msg = "login error";
             outputStream.write(msg.getBytes());
         }

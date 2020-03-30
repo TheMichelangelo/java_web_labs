@@ -7,8 +7,8 @@ public class Book {
     private int price;
     private Date date;
 
-    public Book(long id,String name, String author, int price, Date date) {
-        this.id=id;
+    public Book(long id, String name, String author, int price, Date date) {
+        this.id = id;
         this.name = name;
         this.author = author;
         this.price = price;

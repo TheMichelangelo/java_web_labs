@@ -6,39 +6,37 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Server extends Thread{
+public class Server extends Thread {
 
-    private ArrayList<Connection> workerList = new ArrayList<>();
     ServerSocket serverSocket;
+    private ArrayList<Connection> workerList = new ArrayList<>();
 
-    public Server()
-    {
-        try
-        {
+    public Server() {
+        try {
             serverSocket = new ServerSocket(1001);
             System.out.println(serverSocket.toString());
-        }
-        catch (IOException e)
-        {
-            fail(e,"Can't start server");
+        } catch (IOException e) {
+            fail(e, "Can't start server");
         }
         System.out.println("Server.Server is up");
         this.start();
+    }
+
+    public static void main(String args[]) {
+        new Server();
     }
 
     public List<Connection> getWorkerList() {
         return workerList;
     }
 
-    private void fail(IOException e,String message)
-    {
-        System.out.println(message+". "+e.getMessage());
+    private void fail(IOException e, String message) {
+        System.out.println(message + ". " + e.getMessage());
     }
 
-    public void run()
-    {
+    public void run() {
         try {
-            while(true) {
+            while (true) {
                 System.out.println("About to accept client connection...");
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("Accepted connection from " + clientSocket);
@@ -47,12 +45,7 @@ public class Server extends Thread{
                 worker.start();
             }
         } catch (IOException e) {
-            fail(e,"No listening");
+            fail(e, "No listening");
         }
-    }
-
-    public static void main(String args[])
-    {
-        new Server();
     }
 }

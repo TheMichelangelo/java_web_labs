@@ -34,11 +34,10 @@ public class Client {
                 System.err.println("Login failed");
             }
         }
-        String message =in.nextLine();
-        while(!message.equals("exit"))
-        {
-                client.send_message(message);
-                message =in.nextLine();
+        String message = in.nextLine();
+        while (!message.equals("exit")) {
+            client.send_message(message);
+            message = in.nextLine();
         }
         client.logoff();
     }
