@@ -3,13 +3,21 @@ package model;
 public class User {
     Long id;
     String name;
-    String surname;
+    String password;
     Role role;
 
     public User() {
         this.name="";
-        this.surname="";
+        this.password="";
         this.role=Role.MANAGER;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Long getId() {
@@ -26,14 +34,6 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
     }
 
     public Role getRole() {
