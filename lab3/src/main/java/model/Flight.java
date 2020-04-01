@@ -7,7 +7,7 @@ public class Flight {
     Time timeFlightStarts;
     Time timeArrival;
     int planeNo;
-    Crew flightCrew;
+    Long crew_id;
 
     public Flight() {
         this.planeNo = 0;
@@ -21,6 +21,14 @@ public class Flight {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getCrew_id() {
+        return crew_id;
+    }
+
+    public void setCrew_id(Long crew_id) {
+        this.crew_id = crew_id;
     }
 
     public Time getTimeFlightStarts() {
@@ -45,13 +53,5 @@ public class Flight {
 
     public void setPlaneNo(int planeNo) {
         this.planeNo = planeNo;
-    }
-
-    public Crew getFlightCrew() {
-        return flightCrew;
-    }
-
-    public void setFlightCrew(Crew flightCrew) {
-        this.flightCrew = flightCrew;
     }
 }

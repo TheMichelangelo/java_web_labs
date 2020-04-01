@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class WorkerService {
     private final static String ADD_WORKER_QUERY = "INSERT INTO worker (worker_name,worker_surname, age, salary, " +
@@ -14,7 +16,8 @@ public class WorkerService {
     private final static String SELECT_WORKER_QUERY = "Select * from worker where worker_id=?;";
     private final static String DELETE_WORKER_QUERY = "DELETE * from worker where worker_id=?;";
     private final static String UPDATE_WORKER_QUERY = "UPDATE worker SET worker_name =?, worker_surname=?, age=?, " +
-            "salary=?, profession=? where worker_id = ?;";
+            "salary=?, profession=? crew_id=? where worker_id = ?;";
+    private final static String SELECT_WORKERS_BY_CREW_ID = "Select * from worker where crew_id=?;";
 
     public void deleteWorker(long workerId) {
         try {
@@ -42,7 +45,8 @@ public class WorkerService {
                 worker.setName(rs.getString(rs.getString("worker_name")));
                 worker.setSalary(rs.getInt(rs.getInt("salary")));
                 worker.setSurname(rs.getString(rs.getString("worker_surname")));
-                worker.setId(rs.getLong("id"));
+                worker.setId(rs.getLong("worker_id"));
+                worker.setId(rs.getLong("crew_id"));
                 worker.setProfession(Profession.values()[rs.getInt("profession")]);
                 conn.close();
                 return worker;
@@ -75,7 +79,7 @@ public class WorkerService {
                 worker.setName(workerName);
                 worker.setSalary(salary);
                 worker.setSurname(workerSurname);
-                worker.setId(rs.getLong("id"));
+                worker.setId(rs.getLong("worker_id"));
                 worker.setProfession(profession);
                 conn.close();
                 return worker;
@@ -100,11 +104,11 @@ public class WorkerService {
             pstm.setInt(3, worker.getAge());
             pstm.setInt(4, worker.getSalary());
             pstm.setInt(5, worker.getProfession().ordinal());
-            pstm.setLong(6, worker.getId());
+            pstm.setLong(6, worker.getCrewId());
+            pstm.setLong(7, worker.getId());
 
             ResultSet rs = pstm.executeQuery();
             if (rs.next()) {
-                Worker newWorker = new Worker();
                 conn.close();
             }
             conn.close();
@@ -113,5 +117,45 @@ public class WorkerService {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Worker> getWorkersFromCrewId(long crewId)
+    {
+        try {
+            Connection conn = DBConnection.getNewConnection();
+            PreparedStatement pstm = conn.prepareStatement(SELECT_WORKERS_BY_CREW_ID);
+            pstm.setLong(1, crewId);
+            ResultSet rs = pstm.executeQuery();
+            List<Worker> workerList = new ArrayList<>();
+            if (rs.next()) {
+                Worker worker = new Worker();
+                worker.setAge(rs.getInt(rs.getInt("age")));
+                worker.setName(rs.getString(rs.getString("worker_name")));
+                worker.setSalary(rs.getInt(rs.getInt("salary")));
+                worker.setSurname(rs.getString(rs.getString("worker_surname")));
+                worker.setId(rs.getLong("worker_id"));
+                worker.setId(rs.getLong("crew_id"));
+                worker.setProfession(Profession.values()[rs.getInt("profession")]);
+                workerList.add(worker);
+            }
+            conn.close();
+            return workerList;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<Worker> getWorkersWithoutCrew()
+    {
+        return getWorkersFromCrewId(0);
+    }
+
+    public void UnassignWorkerFromCrew(Worker worker)
+    {
+        worker.setCrewId(0L);
+        updateWorker(worker);
     }
 }

@@ -4,6 +4,7 @@ import static model.Profession.STEWARDESS;
 
 public class Worker {
     Long id;
+    Long crewId;
     String name;
     String surname;
     Profession profession;
@@ -24,6 +25,14 @@ public class Worker {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getCrewId() {
+        return crewId;
+    }
+
+    public void setCrewId(Long crewId) {
+        this.crewId = crewId;
     }
 
     public String getName() {
