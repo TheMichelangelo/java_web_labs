@@ -18,9 +18,9 @@ public class PointWS {
 		try {
 			List<String> points = new ArrayList<String>();
 			Connection con = getConnection();
-			ResultSet rs = con.createStatement().executeQuery("Select name from point");
+			ResultSet rs = con.createStatement().executeQuery("Select name,m from point");
 			while(rs.next()) {
-				points.add(rs.getString(1));
+				points.add("Point name: "+rs.getString(1)+" mass "+rs.getInt(2));
 			}
 			rs.close();
 			con.close();
