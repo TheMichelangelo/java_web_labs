@@ -12,19 +12,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CrewService {
-    private final static String DELETE_CREW_QUERY = "DELETE * from worker where worker_id=?";
-    private final static String SELECT_CREW_QUERY = "Select * from crew where crew_id=?";
-    private final static String ADD_CREW_QUERY = "";
-    private final static String ADD_WORKER_TO_CREW="";
-    private final static String DELETE_WORKER_FROM_CREW="";
+public class FlightService {
+    private final static String ADD_FLIGHT_QUERY = "";
+    private final static String SELECT_FLIGHT_QUERY = "Select * from flight where flight_id=?;";
+    private final static String DELETE_FLIGHT_QUERY = "DELETE * from flight where flight_id=?;";
+    private final static String UPDATE_FLIGHT_QUERY = "";
+    private final static String SELECT_FLIGHTS_BY_CREW_ID = "Select * from flight where crew_id=?;";
 
-    private boolean crewIsAssigned()
-    {
-        return true;
-    }
-
-    public Crew removeCrewFromFlight(Crew crew,Flight flight) {
+    public void deleteFlight(long flightId) {
         try {
             Connection conn = DBConnection.getNewConnection();
             conn.close();
@@ -33,46 +28,9 @@ public class CrewService {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
     }
 
-    public Crew assignCrewToFlight(Crew crew, Flight flight) {
-        try {
-            Connection conn = DBConnection.getNewConnection();
-            conn.close();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public Crew removeWorkerFromCrew(Crew crew,Worker worker) {
-        try {
-            Connection conn = DBConnection.getNewConnection();
-            conn.close();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public Crew assignWorkerToCrew(Crew crew,Worker worker) {
-        try {
-            Connection conn = DBConnection.getNewConnection();
-            conn.close();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public Crew addCrew(String workerName, String workerSurname, int age, int salary, Profession profession) {
+    public Flight getFlight(long flightId) {
         try {
             Connection conn = DBConnection.getNewConnection();
             conn.close();
@@ -86,7 +44,20 @@ public class CrewService {
 
     }
 
-    public void updateCrew(Crew crew) {
+    public Flight addFlight() {
+        try {
+            Connection conn = DBConnection.getNewConnection();
+            conn.close();
+            return null;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void updateFlight(Flight flight) {
         try {
             Connection conn = DBConnection.getNewConnection();
             conn.close();
@@ -97,7 +68,8 @@ public class CrewService {
         }
     }
 
-    public void deleteCrew(Crew crew) {
+    public List<Flight> getFlightsFromCrewId(long crewId)
+    {
         try {
             Connection conn = DBConnection.getNewConnection();
             conn.close();
@@ -106,6 +78,17 @@ public class CrewService {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
+    public List<Flight> getFlightsWithoutCrew()
+    {
+        return getFlightsFromCrewId(0);
+    }
+
+    public void UnassignCrewFromFlight(Flight flight)
+    {
+        flight.setCrew_id(0L);
+        updateFlight(flight);
+    }
 }
