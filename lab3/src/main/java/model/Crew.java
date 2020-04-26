@@ -29,6 +29,14 @@ public class Crew {
         this.flights = flights;
     }
 
+    public void addFlight(Flight flight) {
+        this.flights.add(flight);
+    }
+
+    public void removeFlight(Flight flight) {
+        this.flights.remove(flight);
+    }
+
     public Long getId() {
         return id;
     }
@@ -43,5 +51,13 @@ public class Crew {
 
     public void setStaff(List<Worker> staff) {
         this.staff = staff;
+    }
+
+    public void addWorker(Worker worker) {
+        this.staff.add(worker);
+    }
+
+    public void removeWorker(Worker worker) {
+        this.staff.remove(worker);
     }
 }

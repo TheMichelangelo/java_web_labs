@@ -6,13 +6,33 @@ public class Flight {
     Long id;
     Time timeFlightStarts;
     Time timeArrival;
+    String locationFrom;
+    String locationTo;
     int planeNo;
-    Long crew_id;
+    Long crewId;
 
     public Flight() {
         this.planeNo = 0;
         this.timeFlightStarts = new Time(0);
         this.timeArrival = new Time(0);
+        this.locationFrom="";
+        this.locationTo="";
+    }
+
+    public String getLocationFrom() {
+        return locationFrom;
+    }
+
+    public void setLocationFrom(String locationFrom) {
+        this.locationFrom = locationFrom;
+    }
+
+    public String getLocationTo() {
+        return locationTo;
+    }
+
+    public void setLocationTo(String locationTo) {
+        this.locationTo = locationTo;
     }
 
     public Long getId() {
@@ -23,12 +43,12 @@ public class Flight {
         this.id = id;
     }
 
-    public Long getCrew_id() {
-        return crew_id;
+    public Long getCrewId() {
+        return crewId;
     }
 
-    public void setCrew_id(Long crew_id) {
-        this.crew_id = crew_id;
+    public void setCrewId(Long crewId) {
+        this.crewId = crewId;
     }
 
     public Time getTimeFlightStarts() {
