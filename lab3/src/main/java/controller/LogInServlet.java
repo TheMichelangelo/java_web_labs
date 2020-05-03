@@ -67,6 +67,7 @@ public class LogInServlet extends HttpServlet {
         } else {
             HttpSession session = request.getSession();
             session.setAttribute("loginedUser", user);
+            request.setAttribute("errorString", "");
 
             // If user checked "Remember me".
             if (remember) {
@@ -83,7 +84,7 @@ public class LogInServlet extends HttpServlet {
             }
 
             // Redirect to flights page.
-            response.sendRedirect(request.getContextPath() + "/flights");
+            response.sendRedirect(request.getContextPath() + "/");
         }
     }
 }

@@ -20,21 +20,25 @@
 </head>
 <body>
 <jsp:include page="header.jsp"></jsp:include>
-<jsp:include page="menu.jsp"></jsp:include>
 
 <h3>Login Page</h3>
-<p style="color: red;">${errorString}</p>
 
+<% String errorMessage = (String) request.getAttribute("errorString"); %>
+<% if(errorMessage!=null){ %>
+<p style="color: red;">errorMessage</p>
+<% }else{ %>
 
-<form method="POST" action="${pageContext.request.contextPath}/login">
+<%} %>
+
+<form method="POST" action="/login">
     <table border="0">
         <tr>
             <td>User Name</td>
-            <td><input type="text" name="userName" value= "${user.userName}" /> </td>
+            <td><input type="text" name="userName" value= "" /> </td>
         </tr>
         <tr>
             <td>Password</td>
-            <td><input type="text" name="password" value= "${user.password}" /> </td>
+            <td><input type="password" name="password" value= "" /> </td>
         </tr>
         <tr>
             <td>Remember me</td>
@@ -43,13 +47,13 @@
         <tr>
             <td colspan ="2">
                 <input type="submit" value= "Submit" />
-                <a href="${pageContext.request.contextPath}/">Cancel</a>
+                <a href="/">Cancel</a>
             </td>
         </tr>
     </table>
 </form>
 
-<p style="color:blue;">User Name: user, password: user or password</p>
+<p style="color:blue;">Do not have an account? <a href="signup.jsp">SIGN UP</a></p>
 
 <jsp:include page="footer.jsp"></jsp:include>
 </body>

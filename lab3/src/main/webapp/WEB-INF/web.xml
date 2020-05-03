@@ -3,5 +3,15 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-  <display-name>Archetype Created Web Application</display-name>
+  <display-name>Lab 3 Airlines</display-name>
+    <servlet>
+        <servlet-name>FlightsServlet</servlet-name>
+        <servlet-class>controller.flight.FlightsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FlightsServlet</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
 </web-app>
+
+

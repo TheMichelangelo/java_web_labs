@@ -50,18 +50,10 @@ public class UserService {
             pstm.setString(1, userName);
             pstm.setString(2, hashPassword(password));
             pstm.setInt(3, role.ordinal());
-            ResultSet rs = pstm.executeQuery();
-
-            if (rs.next()) {
-                User user = new User();
-                user.setName(userName);
-                user.setId(rs.getLong("id"));
-                user.setRole(role);
-                conn.close();
-                return user;
-            }
+            pstm.executeUpdate();
             conn.close();
-            return null;
+            User user= getUser(userName,password);
+            return user;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
