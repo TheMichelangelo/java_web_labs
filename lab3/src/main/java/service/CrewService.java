@@ -4,10 +4,7 @@ import model.Crew;
 import model.Flight;
 import model.Worker;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,17 +81,20 @@ public class CrewService {
     public Crew addCrew(int no) {
         try {
             Connection conn = DBConnection.getNewConnection();
-            PreparedStatement pstm = conn.prepareStatement(ADD_CREW_QUERY);
+            PreparedStatement pstm = conn.prepareStatement(ADD_CREW_QUERY,Statement.RETURN_GENERATED_KEYS);
             pstm.setInt(1, no);
 
-            ResultSet rs = pstm.executeQuery();
-            if (rs.next()) {
-                Crew crew = new Crew();
-                crew.setId(rs.getLong("crew_id"));
-                crew.setNo(no);
+            pstm.executeUpdate();
+            Crew crew = new Crew();
+            crew.setNo(no);
+            ResultSet generatedKeys = pstm.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                crew.setId(generatedKeys.getLong(1));
+                generatedKeys.close();
                 conn.close();
                 return crew;
             }
+            generatedKeys.close();
             conn.close();
             return null;
         } catch (ClassNotFoundException e) {
@@ -109,7 +109,7 @@ public class CrewService {
     public void updateCrew(Crew crew) {
         try {
             Connection conn = DBConnection.getNewConnection();
-            PreparedStatement pstm = conn.prepareStatement(UPDATE_CREW_QUERY);
+            PreparedStatement pstm = conn.prepareStatement(UPDATE_CREW_QUERY,Statement.RETURN_GENERATED_KEYS);
             pstm.setInt(1, crew.getNo());
             pstm.setLong(2, crew.getId());
             pstm.executeUpdate();

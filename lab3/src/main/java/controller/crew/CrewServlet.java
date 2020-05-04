@@ -28,7 +28,7 @@ public class CrewServlet extends HttpServlet {
         request.setAttribute("crew", crew);
 
         RequestDispatcher dispatcher = getServletContext()
-                .getRequestDispatcher("/crew.jsp");
+                .getRequestDispatcher("/pages/crew.jsp");
         dispatcher.forward(request, response);
     }
 
