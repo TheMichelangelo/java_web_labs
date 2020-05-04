@@ -28,7 +28,7 @@ public class WorkersServlet extends HttpServlet {
         request.setAttribute("workers", workers);
 
         RequestDispatcher dispatcher = getServletContext()
-                .getRequestDispatcher("/workers.jsp");
+                .getRequestDispatcher("/pages/workers.jsp");
         dispatcher.forward(request, response);
     }
 

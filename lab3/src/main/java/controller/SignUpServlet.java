@@ -17,7 +17,7 @@ public class SignUpServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/signup.jsp");
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pages/signup.jsp");
         dispatcher.forward(request, response);
     }
 

@@ -61,7 +61,7 @@ public class LogInServlet extends HttpServlet {
             request.setAttribute("user", user);
 
             RequestDispatcher dispatcher //
-                    = this.getServletContext().getRequestDispatcher("login.jsp");
+                    = this.getServletContext().getRequestDispatcher("/pages/login.jsp");
 
             dispatcher.forward(request, response);
         } else {
@@ -84,7 +84,7 @@ public class LogInServlet extends HttpServlet {
             }
 
             // Redirect to flights page.
-            response.sendRedirect(request.getContextPath() + "/");
+            response.sendRedirect("/");
         }
     }
 }

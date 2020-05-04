@@ -29,7 +29,7 @@ public class FlightsServlet extends HttpServlet {
         request.setAttribute("flights", flights);
 
         RequestDispatcher dispatcher = getServletContext()
-                .getRequestDispatcher("/flights.jsp");
+                .getRequestDispatcher("/pages/flights.jsp");
         dispatcher.forward(request, response);
     }
 

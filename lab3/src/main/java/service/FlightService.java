@@ -12,9 +12,9 @@ public class FlightService {
     private final static String SELECT_ALL_FLIGHTS = "Select * from flight";
     private final static String SELECT_FLIGHT_QUERY = "Select * from flight where flight_id=?;";
     private final static String SELECT_FLIGHTS_BY_CREW_ID = "Select * from flight where crew_id=?;";
-    private final static String DELETE_FLIGHT_QUERY = "DELETE * from flight where flight_id=?;";
+    private final static String DELETE_FLIGHT_QUERY = "DELETE from flight where flight_id=?;";
     private final static String UPDATE_FLIGHT_QUERY = "UPDATE flight SET plane_no =?, location_to=?, location_from=?," +
-            "time_arrival=?, time_flight_starts=? crew_id=? where flight_id = ?;";
+            "time_arrival=?, time_flight_starts=?, crew_id=? where flight_id = ?;";
 
 
     public void deleteFlight(Flight flight) {
@@ -37,14 +37,14 @@ public class FlightService {
             PreparedStatement pstm = conn.prepareStatement(SELECT_ALL_FLIGHTS);
             ResultSet rs = pstm.executeQuery();
             List<Flight> flights = new ArrayList<Flight>();
-            if (rs.next()) {
+            while (rs.next()) {
                 Flight flight = new Flight();
                 flight.setLocationFrom(rs.getString("location_from"));
                 flight.setLocationTo(rs.getString("location_to"));
                 flight.setId(rs.getLong("flight_id"));
                 flight.setPlaneNo(rs.getInt("plane_no"));
-                flight.setTimeArrival(rs.getTime("time_arrival"));
-                flight.setTimeFlightStarts(rs.getTime("time_flight_starts"));
+                flight.setTimeArrival(rs.getString("time_arrival"));
+                flight.setTimeFlightStarts(rs.getString("time_flight_starts"));
                 flight.setCrewId(rs.getLong("crew_id"));
                 flights.add(flight);
             }
@@ -72,8 +72,8 @@ public class FlightService {
                 flight.setLocationTo(rs.getString("location_to"));
                 flight.setId(rs.getLong("flight_id"));
                 flight.setPlaneNo(rs.getInt("plane_no"));
-                flight.setTimeArrival(rs.getTime("time_arrival"));
-                flight.setTimeFlightStarts(rs.getTime("time_flight_starts"));
+                flight.setTimeArrival(rs.getString("time_arrival"));
+                flight.setTimeFlightStarts(rs.getString("time_flight_starts"));
                 flight.setCrewId(rs.getLong("crew_id"));
                 rs.close();
                 conn.close();
@@ -90,29 +90,30 @@ public class FlightService {
 
     }
 
-    public Flight addFlight(int planeNo, String locationTo, String locationFrom, Time timeArrival, Time timeStarts) {
+    public Flight addFlight(int planeNo, String locationTo, String locationFrom, String timeArrival, String timeStarts) {
         try {
             Connection conn = DBConnection.getNewConnection();
-            PreparedStatement pstm = conn.prepareStatement(ADD_FLIGHT_QUERY);
+            PreparedStatement pstm = conn.prepareStatement(ADD_FLIGHT_QUERY,Statement.RETURN_GENERATED_KEYS);
             pstm.setInt(1, planeNo);
             pstm.setString(2, locationTo);
             pstm.setString(3, locationFrom);
-            pstm.setTime(4, timeArrival);
-            pstm.setTime(5, timeStarts);
+            pstm.setString(4, timeArrival);
+            pstm.setString(5, timeStarts);
+            pstm.executeUpdate();
 
-            ResultSet rs = pstm.executeQuery();
-            if (rs.next()) {
-                Flight flight = new Flight();
-                flight.setPlaneNo(planeNo);
-                flight.setLocationTo(locationTo);
-                flight.setLocationFrom(locationFrom);
-                flight.setTimeArrival(timeArrival);
-                flight.setTimeFlightStarts(timeStarts);
-                flight.setId(rs.getLong("flight_id"));
-                flight.setCrewId(rs.getLong("crew_id"));
-                conn.close();
+            Flight flight = new Flight();
+            flight.setPlaneNo(planeNo);
+            flight.setLocationTo(locationTo);
+            flight.setLocationFrom(locationFrom);
+            flight.setTimeArrival(timeArrival);
+            flight.setTimeFlightStarts(timeStarts);
+            flight.setCrewId(0L);
+            ResultSet generatedKeys = pstm.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                flight.setId(generatedKeys.getLong(1));
                 return flight;
             }
+            generatedKeys.close();
             conn.close();
             return null;
         } catch (ClassNotFoundException e) {
@@ -131,8 +132,8 @@ public class FlightService {
             pstm.setInt(1, flight.getPlaneNo());
             pstm.setString(2, flight.getLocationTo());
             pstm.setString(3, flight.getLocationFrom());
-            pstm.setTime(4, flight.getTimeArrival());
-            pstm.setTime(5, flight.getTimeFlightStarts());
+            pstm.setString(4, flight.getTimeArrival());
+            pstm.setString(5, flight.getTimeFlightStarts());
             pstm.setLong(6, flight.getCrewId());
             pstm.setLong(7, flight.getId());
 
@@ -158,9 +159,9 @@ public class FlightService {
                 flight.setLocationTo(rs.getString("location_to"));
                 flight.setId(rs.getLong("flight_id"));
                 flight.setPlaneNo(rs.getInt("plane_no"));
-                flight.setTimeArrival(rs.getTime("time_arrival"));
-                flight.setTimeFlightStarts(rs.getTime("time_flight_starts"));
-                flight.setCrewId(rs.getLong("crew_id"));
+                flight.setTimeArrival(rs.getString("time_arrival"));
+                flight.setTimeFlightStarts(rs.getString("time_flight_starts"));
+                flight.setCrewId(crewId);
                 flights.add(flight);
             }
             rs.close();

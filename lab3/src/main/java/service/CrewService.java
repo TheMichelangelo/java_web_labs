@@ -12,13 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CrewService {
-    private final static String DELETE_CREW_QUERY = "DELETE * from crew where crew_id=?";
+    private final static String DELETE_CREW_QUERY = "DELETE from crew where crew_id=?";
     private final static String SELECT_ALL_CREWS_QUERY = "SELECT * from crew";
     private final static String SELECT_CREW_QUERY = "SELECT * from crew where crew_id=?";
     private final static String ADD_CREW_QUERY = "INSERT INTO crew (crew_number) VALUES (?)";
     private final static String UPDATE_CREW_QUERY = "UPDATE crew SET crew_number=? where crew_id=?";
 
-    private boolean checkCrewIsAssigned(Crew crew) {
+    public boolean checkCrewIsAssigned(Crew crew) {
         FlightService fs = new FlightService();
         List<Flight> flights = fs.getFlightsFromCrewId(crew.getId());
         if (flights.isEmpty())
@@ -26,7 +26,7 @@ public class CrewService {
         return true;
     }
 
-    private boolean checkCrewIsComplete(Crew crew) {
+    public boolean checkCrewIsComplete(Crew crew) {
         WorkerService ws = new WorkerService();
         List<Worker> workers = ws.getWorkersFromCrewId(crew.getId());
         int pilotsCount = 0, navigatorCount = 0, operatorCount = 0, stewardessCount = 0;
@@ -151,7 +151,7 @@ public class CrewService {
             ResultSet rs = pstm.executeQuery();
             if (rs.next()) {
                 Crew crew = new Crew();
-                crew.setNo(rs.getInt("number"));
+                crew.setNo(rs.getInt("crew_number"));
                 crew.setId(rs.getLong("crew_id"));
                 WorkerService ws = new WorkerService();
                 List<Worker> staff = ws.getWorkersFromCrewId(crew.getId());
@@ -181,7 +181,7 @@ public class CrewService {
             List<Crew> crewList = new ArrayList<>();
             while (rs.next()) {
                 Crew crew = new Crew();
-                crew.setNo(rs.getInt("number"));
+                crew.setNo(rs.getInt("crew_number"));
                 crew.setId(rs.getLong("crew_id"));
                 WorkerService ws = new WorkerService();
                 List<Worker> staff = ws.getWorkersFromCrewId(crew.getId());
@@ -189,6 +189,7 @@ public class CrewService {
                 List<Flight> flights = fs.getFlightsFromCrewId(crew.getId());
                 crew.setFlights(flights);
                 crew.setStaff(staff);
+                crewList.add(crew);
             }
             rs.close();
             conn.close();

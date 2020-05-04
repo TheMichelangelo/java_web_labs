@@ -4,8 +4,8 @@ import java.sql.Time;
 
 public class Flight {
     Long id;
-    Time timeFlightStarts;
-    Time timeArrival;
+    String timeFlightStarts;
+    String timeArrival;
     String locationFrom;
     String locationTo;
     int planeNo;
@@ -13,8 +13,8 @@ public class Flight {
 
     public Flight() {
         this.planeNo = 0;
-        this.timeFlightStarts = new Time(0);
-        this.timeArrival = new Time(0);
+        this.timeFlightStarts = "00:00";
+        this.timeArrival = "00:00";
         this.locationFrom="";
         this.locationTo="";
     }
@@ -51,19 +51,19 @@ public class Flight {
         this.crewId = crewId;
     }
 
-    public Time getTimeFlightStarts() {
+    public String getTimeFlightStarts() {
         return timeFlightStarts;
     }
 
-    public void setTimeFlightStarts(Time timeFlightStarts) {
+    public void setTimeFlightStarts(String timeFlightStarts) {
         this.timeFlightStarts = timeFlightStarts;
     }
 
-    public Time getTimeArrival() {
+    public String getTimeArrival() {
         return timeArrival;
     }
 
-    public void setTimeArrival(Time timeArrival) {
+    public void setTimeArrival(String timeArrival) {
         this.timeArrival = timeArrival;
     }
 
