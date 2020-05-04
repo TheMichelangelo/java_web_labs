@@ -53,7 +53,7 @@
     </table>
 </form>
 
-<p style="color:blue;">Do not have an account? <a href="signup.jsp">SIGN UP</a></p>
+<p style="color:blue;">Do not have an account? <a href="/signUp">SIGN UP</a></p>
 
 <jsp:include page="footer.jsp"></jsp:include>
 </body>

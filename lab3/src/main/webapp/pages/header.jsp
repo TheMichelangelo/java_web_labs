@@ -32,7 +32,7 @@
     <a href="/logout">Log out</a>
     <% }else{ %>
     |
-    <a href="/pages/login.jsp">Login</a>
+    <a href="/login">Login</a>
     <%} %>
 
 

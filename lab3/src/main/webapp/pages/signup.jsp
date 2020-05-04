@@ -31,7 +31,7 @@
         <tr>
             <td colspan ="2">
                 <input type="submit" value= "Submit" />
-                <a href="/pages/login.jsp">Cancel</a>
+                <a href="/login">Cancel</a>
             </td>
         </tr>
     </table>
