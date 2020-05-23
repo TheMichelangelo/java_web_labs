@@ -36,5 +36,15 @@
  Сторінка з працівниками
  <image src="images/main_manager_worker_page.PNG">
  <image src="images/edit_worker_page.PNG">
-  Стоірнка з командами
+  Сторінка з командами
  <image src="images/crew_manager_page.PNG">   
+
+2. Авторизація від імені алміністратора
+Головна сторінка
+ <image src="images/admin_main_page.PNG"> 
+Оскільки адміністратор працює лише з польотами,він не має доступу до зміни інформації про працівників чи команду
+  <image src="images/workers_admin_page.PNG"> 
+Сторінка створення польоту
+  <image src="images/create_flight_page.PNG"> 
+Команда на політ призначається на сторінці редагування польоту,оскільки на момент створення може не бути доступних команд
+    
