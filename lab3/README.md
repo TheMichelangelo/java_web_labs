@@ -12,3 +12,29 @@
 
 Діаграма класів/таблиць бази даних
 <image src="images/database_diagram.png" >
+  
+<b>Приклад роботи додатку<b>
+  
+Головна сторінка
+
+<image src="images/main.PNG">
+  
+Сторінка авторизації
+
+<image src="images/login_page.PNG">
+ 
+Сторінка регістрації
+
+<image src="images/sign_up_page.PNG">
+  
+У випадку якщо користувач пройшов авторизацію, головна сторінка зміниться
+1 Головна сторінка від імені диспетчера
+
+<image src="images/main_manager_page.PNG">
+
+ Диспетчер має змогу створювати команди і працівників,змінювати їх данні(тільки у випадку якщо команда не призначена до якогось польоту)
+ Сторінка з працівниками
+ <image src="images/main_manager_worker_page.PNG">
+ <image src="images/edit_worker_page.PNG">
+  Стоірнка з командами
+ <image src="images/crew_manager_page.PNG">   
